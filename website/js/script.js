@@ -1,4 +1,4 @@
-printText = async (data) => {
+const printText = async (data) => {
   const response = await fetch("https://monke.gay/gonadsapi/", {
     method: "POST",
     headers: { "Content-Type": "text/plain" },
@@ -7,7 +7,7 @@ printText = async (data) => {
   return response;
 };
 
-playtts = async (data) => {
+const playtts = async (data) => {
   const response = await fetch("https://monke.gay/gonadsapi/tts/", {
     method: "POST",
     headers: { "Content-type": "text/plain" },
@@ -24,12 +24,16 @@ playtts = async (data) => {
 
   const blob = new Blob(chunks, { type: "audio/mpeg" });
   const audioUrl = URL.createObjectURL(blob);
-
   const audio = new Audio(audioUrl);
-  await audio.play();
+
+  await new Promise((resolve) => {
+    audio.addEventListener("ended", resolve);
+    audio.play();
+  });
 };
 
 document.getElementById("send").addEventListener("click", async () => {
+  const sendBtn = document.getElementById("send");
   const text_value = document.getElementById("prompt").value.trim();
   const text = document.getElementById("prompt");
   const response = document.getElementById("response");
@@ -40,33 +44,24 @@ document.getElementById("send").addEventListener("click", async () => {
     return;
   }
 
-  response.textContent = "Wait for either the slow connection or server";
+  response.textContent = "Wait for either the slow connection or server...";
+  sendBtn.disabled = true;
+  sendBtn.textContent = "Speaking...";
 
   try {
-    console.log("The start of the program");
     const res = await printText(text_value);
-
-    if (!res.ok) alert("Stay tuned till I figure this error out");
-    console.log("got response");
+    if (!res.ok) throw new Error("Bad response from server");
 
     const data = await res.text();
-    console.log("got plain text from gemini");
-
-    // if (!data.ok) alert("2 Stay tuned till I figure this error out");
-    // console.log("got data");
+    response.textContent = data;
 
     await playtts(data);
-    console.log("got audio");
-    response.textContent = data;
-    console.log(
-      "typed out the text. This is lowkey visual so i don't know why I log it"
-    );
-
-    text.value = "";
   } catch (err) {
     console.error("Error:", err);
     response.textContent = "Stay tuned till I figure this error out";
+  } finally {
+    sendBtn.disabled = false;
+    sendBtn.textContent = "Send";
     text.value = "";
-    console.log("text changed");
   }
 });
