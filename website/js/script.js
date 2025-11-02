@@ -58,13 +58,13 @@ document.getElementById("send").addEventListener("click", async () => {
     console.log("The start of the program");
     res = await printText(text_value);
 
-    if (!res.ok) alert("Stay tuned till I figure this error out");
+    if (!res.ok) alert("1 Stay tuned till I figure this error out");
     console.log("got response");
 
     const data = await res.text();
     console.log("got plain text from gemini");
 
-    if (!data.ok) alert("Stay tuned till I figure this error out");
+    if (!data.ok) alert("2 Stay tuned till I figure this error out");
     console.log("got data");
 
     await playtts(data);
