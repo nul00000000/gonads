@@ -14,6 +14,7 @@
 // };
 
 document.getElementById("send").addEventListener("click", async () => {
+	readText("this shit is so fucked what the balls");
   const text_value = document.getElementById("prompt").value.trim();
   const text = document.getElementById("prompt");
   const response = document.getElementById("response");
@@ -42,9 +43,8 @@ document.getElementById("send").addEventListener("click", async () => {
     console.log("breakpoint 2 worked");
 
     response.textContent = data;
-    // New library
+
     TextToSpeech.talk("hello world");
-    // readText(response.textContent);
     console.log("breakpoint 3 worked");
     text.value = "";
   } catch (err) {

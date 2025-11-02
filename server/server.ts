@@ -1,7 +1,10 @@
 require("dotenv").config();
 
 const express = require('express');
+const bodyParser = require('body-parser');
 const app = express();
+
+let textParser = bodyParser.text();
 
 console.log("GONADS Server Running")
 
@@ -17,14 +20,10 @@ type GeminiReq = {
 	contents: GeminiContents[]; 
 }
 
-app.post("/", async (req, res) => {
-	let prompt = req.body;
+app.post("/", textParser, async (req, res) => {
+	let prompt = "[] " + req.body;
 
-	console.log(prompt);
-	
-	contents = JSON.stringify({contents: [{parts: [{text: "what the frickity frack why isnt this working"}]}]});
-
-	console.log(`gonna blow up ${contents}`);
+	contents = JSON.stringify({contents: [{parts: [{text: prompt}]}]});
 
 	const meow = await fetch("https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent",
 	{
@@ -39,12 +38,12 @@ app.post("/", async (req, res) => {
 	if(!meow.ok) {
 		console.log(`noooo the response was ${meow.status}`);
 		let chat = await meow.json();
-		console.log(chat.candidates[0]);
+		console.log(chat);
+		res.send(`Sorry pookie you got a HTTP ${meow.status}`);
 	} else {
 		let chat = await meow.json();
-		console.log(chat);
+		res.send(chat.candidates[0].content.parts[0].text);
 	}
-	res.send("fuck you");
 });
 
 app.listen(8686, () => {
