@@ -28,16 +28,16 @@ document.getElementById("send").addEventListener("click", async () => {
 
   try {
     console.log("The start of the program");
-    const res = await fetch("https://monke.gay/gonadsapi", {
+    const res = await fetch("https://monke.gay/gonadsapi/", {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: { text_value },
+      headers: { "Content-Type": "text/plain" },
+      body: text_value,
     });
 
     if (!res.ok) alert("Stay tuned till I figure this error out");
     console.log("breakpoint 1 worked");
 
-    const data = await res.json();
+    const data = await res.text();
     console.log("breakpoint 2 worked");
 
     response.textContent = data.reply;
