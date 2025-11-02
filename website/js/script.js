@@ -11,7 +11,7 @@
 
 //   console.log(tts);
 printText = async (data) => {
-  const response = await fetch("https://monke.gay/", {
+  const response = await fetch("https://monke.gay/gonadsapi/", {
     method: "POST",
     headers: { "Content-Type": "text/plain" },
     body: data,
@@ -20,7 +20,7 @@ printText = async (data) => {
 };
 
 playtts = async (data) => {
-  const response = await fetch("https://monke.gay/tts", {
+  const response = await fetch("https://monke.gay/gonadsapi/tts/", {
     method: "POST",
     headers: { "Content-type": "text/plain" },
     body: data,
