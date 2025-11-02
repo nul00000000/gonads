@@ -40,7 +40,7 @@ document.getElementById("send").addEventListener("click", async () => {
     const data = await res.text();
     console.log("breakpoint 2 worked");
 
-    response.textContent = data.reply;
+    response.textContent = data;
     readText(response.textContent);
     console.log("breakpoint 3 worked");
     text.value = "";
