@@ -59,7 +59,7 @@ app.post("/tts/", textParser, async (req, res) => {
 	let audio = await elevenlabs.textToSpeech.convert(
 		'JBFqnCBsd6RMkjVDRZzb',
 		{
-			text: "It's me the audio monster grrrr",
+			text: req.body,
 			modelId: "eleven_multilingual_v2",
 			outputFormat: "mp3_44100_128"
 		}
