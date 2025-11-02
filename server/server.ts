@@ -1,8 +1,13 @@
 require("dotenv").config();
 
+const elven = require('@elevenlabs/elevenlabs-js');
 const express = require('express');
 const bodyParser = require('body-parser');
 const app = express();
+
+const elevenlabs = new elven.ElevenLabsClient({
+	apiKey: process.env.ELEVENLABS_KEY,
+});
 
 let textParser = bodyParser.text();
 
@@ -43,6 +48,30 @@ app.post("/", textParser, async (req, res) => {
 	} else {
 		let chat = await meow.json();
 		res.send(chat.candidates[0].content.parts[0].text);
+
+		let audio = await elevenlabs.textToSpeech.convert(
+			'JBFqnCBsd6RMkjVDRZzb',
+			{
+				text: "It's me the audio monster grrrr",
+				modelId: "eleven_multilingual_v2",
+				outputFormat: "mp3_44100_128"
+			}
+		);
+
+		let reader = audio.getReader();
+		let done = false;
+		function pump() {
+			reader.read().then(({done, value}) => {
+				if(!done) {
+					res.write(value);
+					pump();
+				} else {
+					res.end();
+				}
+			});
+		}
+
+		console.log(audio);
 	}
 });
 
