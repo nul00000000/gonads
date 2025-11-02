@@ -1,16 +1,17 @@
-readText = (text) => {
-  if (!("speechSynthesis" in window)) {
-    console.log("Why tf is the speechSynthesis not supported");
-    return;
-  }
-  const tts = new SpeechSynthesisUtterance(text);
-  tts.lang = "en-US";
-  tts.pitch = 1;
-  tts.rate = 1;
-  tts.volume = 1;
+// readText = (text) => {
+//   if (!("speechSynthesis" in window)) {
+//     console.log("Why tf is the speechSynthesis not supported");
+//     return;
+//   }
+//   const tts = new SpeechSynthesisUtterance(text);
+//   tts.lang = "en-US";
+//   tts.pitch = 1;
+//   tts.rate = 1;
+//   tts.volume = 1;
 
-  window.speechSynthesis.speak(tts);
-};
+//   console.log(tts);
+//   window.speechSynthesis.speak(tts);
+// };
 
 document.getElementById("send").addEventListener("click", async () => {
   const text_value = document.getElementById("prompt").value.trim();
@@ -19,7 +20,7 @@ document.getElementById("send").addEventListener("click", async () => {
 
   if (!text_value) {
     response.textContent = "Enter SOMETHING";
-    readText(response.textContent);
+    // readText(response.textContent);
     text.value = "";
     return;
   }
@@ -41,13 +42,15 @@ document.getElementById("send").addEventListener("click", async () => {
     console.log("breakpoint 2 worked");
 
     response.textContent = data;
-    readText(response.textContent);
+    // New library
+    TextToSpeech.talk("hello world");
+    // readText(response.textContent);
     console.log("breakpoint 3 worked");
     text.value = "";
   } catch (err) {
     console.error("Fetch error:", err);
     response.textContent = "Stay tuned till I figure this error out";
-    readText(response.textContent);
+    // readText(response.textContent);
     console.log("before text change");
     text.value = "";
     console.log("after text change");
