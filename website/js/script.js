@@ -10,18 +10,44 @@
 //   tts.volume = 1;
 
 //   console.log(tts);
-//   window.speechSynthesis.speak(tts);
-// };
+printText = async (data) => {
+  const response = await fetch("https://monke.gay/", {
+    method: "POST",
+    headers: { "Content-Type": "text/plain" },
+    body: data,
+  });
+  return response;
+};
+
+playtts = async (data) => {
+  const response = await fetch("https://monke.gay/tts", {
+    method: "POST",
+    headers: { "Content-type": "text/plain" },
+    body: data,
+  });
+  const reader = response.body.getReader();
+  const chunks = [];
+
+  while (true) {
+    const { done, value } = await reader.read();
+    if (done) break;
+    chunks.push(value);
+  }
+
+  const blob = new Blob(chunks, { type: "audio/mpeg" });
+  const audioUrl = URL.createObjectURL(blob);
+
+  const audio = new Audio(audioUrl);
+  await audio.play();
+};
 
 document.getElementById("send").addEventListener("click", async () => {
-	readText("this shit is so fucked what the balls");
   const text_value = document.getElementById("prompt").value.trim();
   const text = document.getElementById("prompt");
   const response = document.getElementById("response");
 
   if (!text_value) {
     response.textContent = "Enter SOMETHING";
-    // readText(response.textContent);
     text.value = "";
     return;
   }
@@ -30,29 +56,29 @@ document.getElementById("send").addEventListener("click", async () => {
 
   try {
     console.log("The start of the program");
-    const res = await fetch("https://monke.gay/gonadsapi/", {
-      method: "POST",
-      headers: { "Content-Type": "text/plain" },
-      body: text_value,
-    });
+    res = await printText(text_value);
 
     if (!res.ok) alert("Stay tuned till I figure this error out");
-    console.log("breakpoint 1 worked");
+    console.log("got response");
 
     const data = await res.text();
-    console.log("breakpoint 2 worked");
+    console.log("got plain text from gemini");
 
+    if (!data.ok) alert("Stay tuned till I figure this error out");
+    console.log("got data");
+
+    await playtts(data);
+    console.log("got audio");
     response.textContent = data;
+    console.log(
+      "typed out the text. This is lowkey visual so i don't know why I log it"
+    );
 
-    TextToSpeech.talk("hello world");
-    console.log("breakpoint 3 worked");
     text.value = "";
   } catch (err) {
-    console.error("Fetch error:", err);
+    console.error("Error:", err);
     response.textContent = "Stay tuned till I figure this error out";
-    // readText(response.textContent);
-    console.log("before text change");
     text.value = "";
-    console.log("after text change");
+    console.log("text changed");
   }
 });
