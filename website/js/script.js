@@ -1,15 +1,3 @@
-// readText = (text) => {
-//   if (!("speechSynthesis" in window)) {
-//     console.log("Why tf is the speechSynthesis not supported");
-//     return;
-//   }
-//   const tts = new SpeechSynthesisUtterance(text);
-//   tts.lang = "en-US";
-//   tts.pitch = 1;
-//   tts.rate = 1;
-//   tts.volume = 1;
-
-//   console.log(tts);
 printText = async (data) => {
   const response = await fetch("https://monke.gay/gonadsapi/", {
     method: "POST",
