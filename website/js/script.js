@@ -1,3 +1,5 @@
+const ERROR = "Stay tuned till I figure this error out";
+
 const printText = async (data) => {
   const response = await fetch("https://monke.gay/gonadsapi/", {
     method: "POST",
@@ -44,13 +46,13 @@ const clickBehavior = async () => {
     return;
   }
 
-  response.textContent = "Wait for either the slow connection or server...";
+  response.textContent = "Just Be Patient";
   sendBtn.disabled = true;
-  sendBtn.textContent = "Speaking...";
+  sendBtn.textContent = "Don't try to click this";
 
   try {
     const res = await printText(text_value);
-    if (!res.ok) throw new Error("Bad response from server");
+    if (!res.ok) alert(ERROR);
 
     const data = await res.text();
     response.textContent = data;
@@ -58,7 +60,7 @@ const clickBehavior = async () => {
     await playtts(data);
   } catch (err) {
     console.error("Error:", err);
-    response.textContent = "Stay tuned till I figure this error out";
+    response.textContent = ERROR;
   } finally {
     sendBtn.disabled = false;
     sendBtn.textContent = "Send";
