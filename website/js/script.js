@@ -32,7 +32,7 @@ const playtts = async (data) => {
   });
 };
 
-document.getElementById("send").addEventListener("click", async () => {
+const clickBehavior = async () => {
   const sendBtn = document.getElementById("send");
   const text_value = document.getElementById("prompt").value.trim();
   const text = document.getElementById("prompt");
@@ -63,5 +63,13 @@ document.getElementById("send").addEventListener("click", async () => {
     sendBtn.disabled = false;
     sendBtn.textContent = "Send";
     text.value = "";
+  }
+};
+
+document.getElementById("send").addEventListener("click", clickBehavior);
+
+document.getElementById("prompt").addEventListener("keydown", (e) => {
+  if (e.key == "Enter") {
+    clickBehavior();
   }
 });
