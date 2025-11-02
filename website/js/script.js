@@ -28,7 +28,7 @@ document.getElementById("send").addEventListener("click", async () => {
 
   try {
     console.log("The start of the program");
-    const res = await fetch("https://monke.gay/gonads/api", {
+    const res = await fetch("https://monke.gay/gonadsapi", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: { text_value },
