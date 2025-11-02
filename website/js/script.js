@@ -46,7 +46,7 @@ const clickBehavior = async () => {
     return;
   }
 
-  response.textContent = "Just Be Patient";
+  response.textContent = "Just Be Patient...";
   sendBtn.disabled = true;
   text.disabled = true;
   text.style.opacity = 0.5;
