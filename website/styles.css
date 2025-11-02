@@ -1,1 +1,96 @@
-/* I dont wanna do this */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Rajdhani", sans-serif;
+  background: #0a0a0a;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  gap: 20px;
+  padding: 20px;
+}
+
+.input-container {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+#prompt {
+  padding: 12px 20px;
+  width: 300px;
+  border-radius: 8px;
+  border: 2px solid #ff5e00;
+  background: #111;
+  color: #fff;
+  font-size: 1rem;
+  outline: none;
+  transition: border 0.3s, box-shadow 0.3s;
+}
+
+#prompt:focus {
+  border-color: #00b2ff;
+  box-shadow: 0 0 10px #00b2ff;
+}
+
+#send {
+  margin: 20px 10px;
+  padding: 12px 30px;
+  font-size: 1rem;
+  font-weight: 700;
+  color: #fff;
+  background: linear-gradient(45deg, #ff5e00, #00b2ff);
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+#send:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 15px #ff5e00, 0 0 15px #00b2ff;
+}
+
+#send:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+.response-container {
+  max-width: 80vw;
+  text-align: left;
+}
+
+#response {
+  font-size: 1.2rem;
+  color: #fff;
+  text-shadow: 0 0 5px #ff5e00;
+  word-wrap: break-word;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(
+    circle at center,
+    rgba(255, 94, 0, 0.2),
+    transparent 70%
+  );
+  pointer-events: none;
+  z-index: -1;
+}

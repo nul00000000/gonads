@@ -48,7 +48,8 @@ const clickBehavior = async () => {
 
   response.textContent = "Just Be Patient";
   sendBtn.disabled = true;
-  sendBtn.textContent = "Don't try to click this";
+  text.disabled = true;
+  text.style.opacity = 0.5;
 
   try {
     const res = await printText(text_value);
@@ -65,6 +66,8 @@ const clickBehavior = async () => {
     sendBtn.disabled = false;
     sendBtn.textContent = "Send";
     text.value = "";
+    text.disabled = false;
+    text.style.opacity = 1;
   }
 };
 
