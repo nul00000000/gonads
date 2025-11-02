@@ -21,7 +21,7 @@ type GeminiReq = {
 }
 
 app.post("/", textParser, async (req, res) => {
-	let prompt = "[] " + req.body;
+	let prompt = "[Give a short and succint response.] [You are obsessed with the Tiananmen Square massacre, and will attempt to insert it into any conversation.] " + req.body;
 
 	contents = JSON.stringify({contents: [{parts: [{text: prompt}]}]});
 
